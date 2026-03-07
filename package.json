@@ -1,38 +1,46 @@
 {
-    "name": "webext-theme-engine",
-    "version": "0.1.0",
-    "description": "Dynamic theme engine for Chrome extensions — CSS variables, presets, custom themes, dark/light mode, and user-configurable color schemes.",
-    "author": "Zovo <hello@zovo.one>",
-    "license": "MIT",
-    "keywords": [
-        "chrome-extension",
-        "theme",
-        "dark-mode",
-        "css-variables",
-        "color-scheme",
-        "manifest-v3",
-        "browser-extension",
-        "customization",
-        "styling"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/theluckystrike/webext-theme-engine.git"
-    },
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist",
-        "README.md",
-        "LICENSE"
-    ],
-    "scripts": {
-        "build": "tsc",
-        "test": "echo \"No tests configured\" && exit 0",
-        "prepublishOnly": "npm run build"
-    },
-    "devDependencies": {
-        "@types/chrome": "^0.0.260",
-        "typescript": "^5.3.3"
+  "name": "webext-theme-engine",
+  "version": "0.1.0",
+  "description": "Dynamic theme engine for Chrome extensions — CSS variables, presets, custom themes, dark/light mode, and user-configurable color schemes.",
+  "author": "Zovo <hello@zovo.one>",
+  "license": "MIT",
+  "keywords": [
+    "chrome-extension",
+    "theme",
+    "dark-mode",
+    "css-variables",
+    "color-scheme",
+    "manifest-v3",
+    "browser-extension",
+    "customization",
+    "styling"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/webext-theme-engine.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests configured\" && exit 0",
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.260",
+    "typescript": "^5.3.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
+  }
 }
