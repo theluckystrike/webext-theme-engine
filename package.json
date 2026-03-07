@@ -28,13 +28,15 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "echo \"No tests configured\" && exit 0",
+    "test": "vitest run --environment happy-dom",
     "prepublishOnly": "npm run build",
     "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.260",
-    "typescript": "^5.3.3"
+    "happy-dom": "^20.8.3",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.18"
   },
   "exports": {
     ".": {
