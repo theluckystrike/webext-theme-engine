@@ -1,3 +1,8 @@
+[![CI](https://github.com/theluckystrike/webext-theme-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/theluckystrike/webext-theme-engine/actions)
+[![npm](https://img.shields.io/npm/v/@theluckystrike/webext-theme-engine)](https://www.npmjs.com/package/@theluckystrike/webext-theme-engine)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+
 # webext-theme-engine
 
 Dynamic CSS variable theming for Chrome extensions. Ships with five built-in presets, automatic dark mode detection, persistent storage through chrome.storage.local, and full support for custom themes. Zero dependencies, built for Manifest V3.
@@ -185,3 +190,6 @@ ABOUT
 webext-theme-engine is built and maintained by theluckystrike as part of the extension tooling at zovo.one, a studio focused on open-source Chrome extension development.
 
 https://github.com/theluckystrike/webext-theme-engine
+
+---
+Built by [theluckystrike](https://github.com/theluckystrike) — [zovo.one](https://zovo.one)
