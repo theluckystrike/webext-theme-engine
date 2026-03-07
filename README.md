@@ -193,3 +193,7 @@ https://github.com/theluckystrike/webext-theme-engine
 
 ---
 Built by [theluckystrike](https://github.com/theluckystrike) — [zovo.one](https://zovo.one)
+
+## License
+
+MIT
