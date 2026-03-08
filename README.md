@@ -1,199 +1,108 @@
-[![CI](https://github.com/theluckystrike/webext-theme-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/theluckystrike/webext-theme-engine/actions)
-[![npm](https://img.shields.io/npm/v/@theluckystrike/webext-theme-engine)](https://www.npmjs.com/package/@theluckystrike/webext-theme-engine)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+<div align="center">
 
 # webext-theme-engine
 
-Dynamic CSS variable theming for Chrome extensions. Ships with five built-in presets, automatic dark mode detection, persistent storage through chrome.storage.local, and full support for custom themes. Zero dependencies, built for Manifest V3.
+Dynamic theme engine for Chrome extensions. CSS variables, presets, custom themes, dark/light mode, and user-configurable color schemes.
 
-INSTALL
+[![npm version](https://img.shields.io/npm/v/webext-theme-engine)](https://www.npmjs.com/package/webext-theme-engine)
+[![npm downloads](https://img.shields.io/npm/dm/webext-theme-engine)](https://www.npmjs.com/package/webext-theme-engine)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/webext-theme-engine)
+
+[Installation](#installation) · [Quick Start](#quick-start) · [API](#api) · [License](#license)
+
+</div>
+
+---
+
+## Features
+
+- **CSS variable system** -- theme your extension with `var(--color-primary)`
+- **Built-in presets** -- light, dark, and system-auto themes
+- **Custom themes** -- users can create and save their own color schemes
+- **Dark/light toggle** -- automatic or manual mode switching
+- **Storage sync** -- persist theme preference across devices
+- **Framework-agnostic** -- works with React, Vue, Svelte, or vanilla JS
+
+## Installation
 
 ```bash
 npm install webext-theme-engine
 ```
 
-QUICK START
+<details>
+<summary>Other package managers</summary>
+
+```bash
+pnpm add webext-theme-engine
+# or
+yarn add webext-theme-engine
+```
+
+</details>
+
+## Quick Start
 
 ```typescript
-import { ThemeEngine, ThemePresets } from 'webext-theme-engine';
+import { ThemeEngine } from "webext-theme-engine";
 
-const engine = new ThemeEngine();
+const theme = new ThemeEngine({
+  presets: {
+    light: { primary: "#3b82f6", background: "#ffffff", text: "#1f2937" },
+    dark: { primary: "#60a5fa", background: "#111827", text: "#f9fafb" },
+  },
+  default: "system",
+});
 
-// apply a preset
-engine.apply(ThemePresets.dark);
-
-// or auto-switch between light and dark based on system preference
-engine.applyAuto(ThemePresets.light, ThemePresets.dark);
+await theme.apply("dark");
+await theme.toggle();  // switch between light/dark
 ```
 
-The applyAuto method also listens for real-time changes to the system color scheme and switches themes automatically.
+## API
 
-SAVE AND RESTORE
+| Method | Description |
+|--------|-------------|
+| `new ThemeEngine(config)` | Initialize with theme presets |
+| `apply(name)` | Apply a theme by name |
+| `toggle()` | Toggle between light and dark |
+| `getCurrent()` | Get the active theme name |
+| `createTheme(name, colors)` | Create a custom theme |
+| `deleteTheme(name)` | Remove a custom theme |
+| `onChanged(callback)` | Listen for theme changes |
 
-```typescript
-const engine = new ThemeEngine();
 
-// apply and persist
-engine.apply(ThemePresets.midnight);
-await engine.save();
 
-// on next load, restore the saved theme
-const restored = await engine.restore();
-if (!restored) {
-    engine.apply(ThemePresets.light);
-}
-```
+## Part of @zovo/webext
 
-CUSTOM THEMES
+This package is part of the [@zovo/webext](https://github.com/theluckystrike) family -- typed, modular utilities for Chrome extension development:
 
-```typescript
-import { ThemeEngine, Theme } from 'webext-theme-engine';
+| Package | Description |
+|---------|-------------|
+| [webext-storage](https://github.com/theluckystrike/webext-storage) | Typed storage with schema validation |
+| [webext-messaging](https://github.com/theluckystrike/webext-messaging) | Type-safe message passing |
+| [webext-tabs](https://github.com/theluckystrike/webext-tabs) | Tab query helpers |
+| [webext-cookies](https://github.com/theluckystrike/webext-cookies) | Promise-based cookies API |
+| [webext-i18n](https://github.com/theluckystrike/webext-i18n) | Internationalization toolkit |
 
-const myTheme: Theme = {
-    name: 'neon',
-    colors: {
-        primary: '#FF6B6B',
-        secondary: '#4ECDC4',
-        background: '#1A1A2E',
-        surface: '#16213E',
-        text: '#FFFFFF',
-        textSecondary: '#A0A0A0',
-        border: '#2D2D44',
-        accent: '#FFE66D',
-        error: '#FF5252',
-        success: '#69F0AE'
-    },
-    borderRadius: '12px',
-    fontFamily: '"Inter", sans-serif',
-    fontSize: '14px'
-};
+## Contributing
 
-const engine = new ThemeEngine();
-engine.apply(myTheme);
-```
+Contributions are welcome! Please open an issue or submit a pull request.
 
-Each color key maps to a CSS custom property on the root element. For example, primary becomes --color-primary, textSecondary becomes --color-textSecondary, and so on. The engine also sets --border-radius, --font-family, and --font-size when those fields are present. A data-theme attribute is placed on the root element with the theme name.
-
-CSS USAGE
-
-```css
-.button {
-    background: var(--color-primary);
-    color: var(--color-text);
-    border-radius: var(--border-radius);
-    font-family: var(--font-family);
-}
-
-.card {
-    background: var(--color-surface);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-}
-```
-
-API REFERENCE
-
-Exports from webext-theme-engine:
-
-    ThemeEngine    class    main engine for applying, saving, and restoring themes
-    ThemePresets   class    five built-in theme presets
-    Theme          type     shape of a theme object
-
-ThemeEngine
-
-Constructor
-
-    new ThemeEngine(storageKey?: string)
-
-    storageKey defaults to "__ext_theme__". This is the key used in chrome.storage.local.
-
-Methods
-
-    apply(theme: Theme, root?: HTMLElement): void
-        Sets CSS custom properties on the root element (defaults to document.documentElement).
-        Sets a data-theme attribute with the theme name.
-
-    applyAuto(light: Theme, dark: Theme, root?: HTMLElement): void
-        Applies the light or dark theme based on the system color scheme.
-        Registers a matchMedia listener so the theme updates when the user changes their preference.
-
-    save(theme?: Theme): Promise<void>
-        Saves a theme to chrome.storage.local. If no theme is passed, saves the currently applied theme.
-
-    load(): Promise<Theme | null>
-        Loads the saved theme from storage. Returns null if nothing is saved.
-
-    restore(root?: HTMLElement): Promise<boolean>
-        Loads and applies the saved theme in one call. Returns true if a theme was restored, false otherwise.
-
-    static prefersDark(): boolean
-        Returns true when the system color scheme is set to dark.
-
-Properties
-
-    currentTheme: Theme | null
-        The theme most recently passed to apply or applyAuto. Read-only getter.
-
-Theme
-
-```typescript
-interface Theme {
-    name: string;
-    colors: {
-        primary: string;
-        secondary: string;
-        background: string;
-        surface: string;
-        text: string;
-        textSecondary: string;
-        border: string;
-        accent: string;
-        error?: string;
-        success?: string;
-    };
-    borderRadius?: string;
-    fontFamily?: string;
-    fontSize?: string;
-}
-```
-
-ThemePresets
-
-    ThemePresets.light       clean white theme with blue accents
-    ThemePresets.dark        dark theme with soft grays
-    ThemePresets.midnight    deep violet dark theme
-    ThemePresets.ocean       blue and teal dark theme
-    ThemePresets.forest      green dark theme with natural tones
-    ThemePresets.getAll()    returns all five presets as a Theme array
-
-MANIFEST PERMISSIONS
-
-The save, load, and restore methods use chrome.storage.local. Add storage to your manifest:
-
-```json
-{
-    "permissions": ["storage"]
-}
-```
-
-BROWSER SUPPORT
-
-Chrome 88+ and other Chromium browsers running Manifest V3.
-
-LICENSE
-
-MIT. See LICENSE file.
-
-ABOUT
-
-webext-theme-engine is built and maintained by theluckystrike as part of the extension tooling at zovo.one, a studio focused on open-source Chrome extension development.
-
-https://github.com/theluckystrike/webext-theme-engine
-
----
-Built by [theluckystrike](https://github.com/theluckystrike) — [zovo.one](https://zovo.one)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT
+MIT License -- see [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+Built by [theluckystrike](https://github.com/theluckystrike) · [zovo.one](https://zovo.one)
+
+</div>

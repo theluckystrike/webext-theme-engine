@@ -1,19 +1,20 @@
 {
   "name": "webext-theme-engine",
   "version": "0.1.0",
-  "description": "Dynamic theme engine for Chrome extensions — CSS variables, presets, custom themes, dark/light mode, and user-configurable color schemes.",
+  "description": "Dynamic theme engine for Chrome extensions -- CSS variables, presets, dark/light mode, and user-configurable color schemes.",
   "author": "Zovo <hello@zovo.one>",
   "license": "MIT",
   "keywords": [
     "chrome-extension",
     "theme",
     "dark-mode",
+    "light-mode",
     "css-variables",
     "color-scheme",
     "manifest-v3",
     "browser-extension",
-    "customization",
-    "styling"
+    "styling",
+    "customization"
   ],
   "repository": {
     "type": "git",
